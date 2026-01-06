@@ -1,34 +1,78 @@
-#shop-sidebar {
-    width: 280px; background: #080810; border-right: 2px solid #00ffcc;
-    padding: 20px; display: flex; flex-direction: column;
+/* Ensure the whole page is dark */
+html, body {
+    background-color: #050510 !important;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
-.shop-title { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; margin-bottom: 20px; }
+#game-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+#shop-sidebar {
+    width: 300px;
+    background: #0d0d1a;
+    border-right: 2px solid #00ffcc;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(circle, #1b2735 0%, #050510 100%);
+}
+
+#active-planet-zone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* If the image fails, this background-color makes it a gray circle */
+#main-planet {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background-color: #333; 
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 50px rgba(0, 255, 204, 0.2);
+    cursor: pointer;
+    border: 4px solid rgba(255,255,255,0.1);
+}
 
 .shop-item {
-    width: 100%; background: #161625; color: white; border: 1px solid #333;
-    padding: 15px; margin-bottom: 10px; border-radius: 4px; cursor: pointer;
-    text-align: left; transition: 0.2s;
+    width: 100%;
+    background: #1a1a2e;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.shop-item:hover { border-color: #00ffcc; background: #1c1c30; }
-
-#planet-nav { display: flex; align-items: center; gap: 30px; margin-top: 40px; }
-
-.nav-arrow {
-    background: #00ffcc; border: none; padding: 10px 20px; font-size: 1.5rem;
-    cursor: pointer; border-radius: 4px; font-weight: bold;
+#admin-panel {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    display: flex; justify-content: center; align-items: center;
 }
 
-#unlock-btn {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    background: #ff0055; color: white; border: none; padding: 25px;
-    font-size: 1.5rem; font-weight: bold; cursor: pointer; border-radius: 8px;
-    box-shadow: 0 0 30px rgba(255,0,85,0.4);
-}
-
-#admin-trigger { 
-    position: fixed; top: 10px; right: 10px; opacity: 0.2; 
-    background: none; border: 1px solid white; color: white; cursor: pointer;
-}
-#admin-trigger:hover { opacity: 1; color: red; border-color: red; }
+.hidden { display: none !important; }
