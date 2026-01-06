@@ -4,23 +4,23 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require('path');
 
-// This tells the server to look in the main folder for your files
 app.use(express.static(__dirname));
 
-// This forces the server to send index.html when someone visits the site
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-let globalMessages = [];
-
 io.on('connection', (socket) => {
-    socket.emit('chatHistory', globalMessages);
+    // When the admin sends a global gift
+    socket.on('adminGlobalGift', (data) => {
+        if (data.code === "4998") {
+            // This sends the gift to EVERY connected socket (player)
+            io.emit('receiveGlobalGift', {
+                type: data.type,
+                amount: data.amount
+            });
+        }
+    });
+
     socket.on('adminMessage', (data) => {
         if (data.code === "4998") {
-            const msg = { user: "ADMIN", text: data.message };
-            globalMessages.push(msg);
-            io.emit('newMessage', msg);
+            io.emit('newMessage', { user: "SYSTEM", text: data.message });
         }
     });
 });

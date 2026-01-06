@@ -1,68 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PlanClicker.com</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="/socket.io/socket.io.js"></script>
-</head>
-<body>
-    <div id="admin-bar">
-        <span style="color:#4ecca3; font-weight:bold;">PLANCLICKER.COM</span>
-        <button onclick="loginAdmin()" style="border-color:red;">ADMIN CONSOLE</button>
+<div id="game-wrapper">
+    <div class="sidebar">
+        <h3>UPGRADES</h3>
+        <div class="shop-section">
+            <button onclick="buy('m1', 50)">x1 Multi (50)</button>
+            <button onclick="buy('m2', 5000)">x10 Multi (5k)</button>
+            <button onclick="buy('m3', 100000)">x100 Multi (100k)</button>
+            </div>
+        <div id="chat-display"></div>
     </div>
 
-    <div class="stats">
-        <div>💰 <span id="clicks">0</span></div>
-        <div>🚀 x<span id="multi">1</span></div>
-        <div>🤖 <span id="autos">0</span></div>
-    </div>
-
-    <div class="game-container">
-        <div id="planets" class="grid"></div>
-        
-        <div class="shop">
-            <h3>Hyper-Multipliers</h3>
-            <div id="multi-shop" class="shop-grid">
-                <button class="shop-btn" onclick="buy('m1', 50)">x1 Multi (50)</button>
-                <button class="shop-btn" onclick="buy('m2', 5000)">x10 Multi (5k)</button>
-                <button class="shop-btn" onclick="buy('m3', 100000)">x100 Multi (100k)</button>
-                <button class="shop-btn" onclick="buy('m4', 5000000)">x1k Multi (5M)</button>
-                <button class="shop-btn" onclick="buy('m5', 1000000000)">x50k Multi (1B)</button>
-                <button class="shop-btn" onclick="buy('m6', 500000000000)">x1M Multi (500B)</button>
-            </div>
-            
-            <h3>Automation</h3>
-            <div id="auto-shop" class="shop-grid">
-                <button class="shop-btn" onclick="buy('a1', 100)">Bot (100)</button>
-                <button class="shop-btn" onclick="buy('a2', 50000)">Fleet (50k)</button>
-                <button class="shop-btn" onclick="buy('a3', 10000000)">Galaxy Swarm (10M)</button>
-            </div>
-            <div id="chat-display"></div>
+    <div class="main-display">
+        <div class="stats-header">
+            <h1>💰 <span id="clicks">0</span></h1>
+            <p>Power: x<span id="multi">1</span> | Bots: <span id="autos">0</span></p>
         </div>
+        <div id="planets" class="planet-container"></div>
     </div>
+</div>
 
-    <div id="admin-modal" class="hidden">
-        <h2 style="color:red; margin-top:0;">SYSTEM OVERRIDE</h2>
-        <div class="admin-grid">
-            <div>
-                <p>Give Clicks</p>
-                <input type="number" id="adm-clicks" placeholder="Amount">
-                <button onclick="adminAction('giveClicks')">Inject</button>
-            </div>
-            <div>
-                <p>Give Multiplier</p>
-                <input type="number" id="adm-multi" placeholder="Amount">
-                <button onclick="adminAction('giveMulti')">Boost</button>
-            </div>
-        </div>
-        <hr>
-        <p>Global Announcement</p>
-        <input type="text" id="admin-chat-input" style="width:80%" placeholder="Message all players...">
-        <button onclick="sendGlobalMsg()">Send</button>
-        <br><br>
-        <button onclick="closeAdmin()" style="background:#333;">Close Console</button>
+<div id="admin-modal" class="hidden">
+    <h2 style="color:red;">PLANCLICKER OVERLORD</h2>
+    <input type="number" id="adm-amount" placeholder="Enter Amount">
+    <div class="admin-btns">
+        <button onclick="adminAction('self', 'clicks')">Give Me Clicks</button>
+        <button onclick="adminAction('everyone', 'clicks')">Give Everyone Clicks</button>
+        <button onclick="adminAction('self', 'multi')">Give Me Multi</button>
+        <button onclick="adminAction('everyone', 'multi')">Give Everyone Multi</button>
     </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    <hr>
+    <button onclick="closeAdmin()">Exit</button>
+</div>
