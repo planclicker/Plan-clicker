@@ -4,15 +4,18 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const path = require('path');
 
-app.use(express.static('public'));
+// This tells the server to look in the main folder for your files
+app.use(express.static(__dirname));
+
+// This forces the server to send index.html when someone visits the site
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 let globalMessages = [];
 
 io.on('connection', (socket) => {
-    console.log('A player connected');
-
     socket.emit('chatHistory', globalMessages);
-
     socket.on('adminMessage', (data) => {
         if (data.code === "4998") {
             const msg = { user: "ADMIN", text: data.message };
