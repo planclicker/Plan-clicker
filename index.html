@@ -1,32 +1,60 @@
-<div id="game-wrapper">
-    <div class="sidebar">
-        <h3>UPGRADES</h3>
-        <div class="shop-section">
-            <button onclick="buy('m1', 50)">x1 Multi (50)</button>
-            <button onclick="buy('m2', 5000)">x10 Multi (5k)</button>
-            <button onclick="buy('m3', 100000)">x100 Multi (100k)</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlanClicker.com</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <div id="shop-sidebar">
+            <h2>UPGRADES</h2>
+            <div id="multiplier-list">
+                </div>
+            <div id="chat-box">
+                <div id="messages"></div>
             </div>
-        <div id="chat-display"></div>
-    </div>
-
-    <div class="main-display">
-        <div class="stats-header">
-            <h1>💰 <span id="clicks">0</span></h1>
-            <p>Power: x<span id="multi">1</span> | Bots: <span id="autos">0</span></p>
         </div>
-        <div id="planets" class="planet-container"></div>
-    </div>
-</div>
 
-<div id="admin-modal" class="hidden">
-    <h2 style="color:red;">PLANCLICKER OVERLORD</h2>
-    <input type="number" id="adm-amount" placeholder="Enter Amount">
-    <div class="admin-btns">
-        <button onclick="adminAction('self', 'clicks')">Give Me Clicks</button>
-        <button onclick="adminAction('everyone', 'clicks')">Give Everyone Clicks</button>
-        <button onclick="adminAction('self', 'multi')">Give Me Multi</button>
-        <button onclick="adminAction('everyone', 'multi')">Give Everyone Multi</button>
+        <div id="main-area">
+            <div id="stats">
+                <h1 id="click-display">💰 0</h1>
+                <p>Multiplier: <span id="multi-display">x1</span></p>
+            </div>
+            
+            <div id="active-planet-zone">
+                <div id="main-planet" onclick="clickPlanet()"></div>
+                <h2 id="planet-name">MERCURY</h2>
+            </div>
+
+            <div id="planet-bar">
+                </div>
+        </div>
+
+        <button id="admin-trigger" onclick="openAdmin()">ADMIN</button>
     </div>
-    <hr>
-    <button onclick="closeAdmin()">Exit</button>
-</div>
+
+    <div id="admin-panel" class="hidden">
+        <div class="admin-content">
+            <h1>SYSTEM OVERRIDE</h1>
+            <input type="number" id="adm-amt" placeholder="Amount">
+            <div class="admin-row">
+                <button onclick="adminAction('self', 'clicks')">Give Me Clicks</button>
+                <button onclick="adminAction('everyone', 'clicks')" class="global-btn">Give All Clicks</button>
+            </div>
+            <div class="admin-row">
+                <button onclick="adminAction('self', 'multi')">Give Me Multi</button>
+                <button onclick="adminAction('everyone', 'multi')" class="global-btn">Give All Multi</button>
+            </div>
+            <hr>
+            <input type="text" id="adm-msg" placeholder="Message to everyone...">
+            <button onclick="broadcast()">Send Global Message</button>
+            <br><br>
+            <button onclick="closeAdmin()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,59 +1,70 @@
 const socket = io();
 let clicks = 0;
 let multiplier = 1;
-let autos = 0;
+let currentPlanetIndex = 0;
 let adminCode = "";
 
-// Planet Data based on CoolMathGames scaling
 const planets = [
-    { name: "Mercury", cost: 0, power: 1 },
-    { name: "Venus", cost: 1000, power: 25 },
-    { name: "Earth", cost: 50000, power: 500 },
-    { name: "Mars", cost: 1000000, power: 8000 },
-    { name: "Jupiter", cost: 100000000, power: 150000 },
-    { name: "Saturn", cost: 5000000000, power: 2000000 },
-    { name: "Uranus", cost: 100000000000, power: 50000000 },
-    { name: "Neptune", cost: 1000000000000, power: 1000000000 }
+    { name: "Mercury", cost: 0, power: 1, img: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg" },
+    { name: "Venus", cost: 500, power: 10, img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Venus_from_Mariner_10.jpg" },
+    { name: "Earth", cost: 5000, power: 50, img: "https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" },
+    { name: "Mars", cost: 50000, power: 200, img: "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" }
 ];
 
-let unlocked = ["Mercury"];
+const upgrades = [
+    { id: 'm1', name: "Slight Boost", multi: 1, cost: 50 },
+    { id: 'm2', name: "Super Boost", multi: 10, cost: 1000 },
+    { id: 'm3', name: "Mega Boost", multi: 100, cost: 25000 },
+    { id: 'm4', name: "God Boost", multi: 1000, cost: 1000000 }
+];
 
-// LISTEN FOR GLOBAL GIFTS FROM ADMIN
-socket.on('receiveGlobalGift', (data) => {
-    if (data.type === 'clicks') {
-        clicks += data.amount;
-    } else if (data.type === 'multi') {
-        multiplier += data.amount;
+let unlockedPlanets = [0];
+
+// ADMIN LOGIN WITH PASSWORD
+function openAdmin() {
+    let pass = prompt("Enter Admin Code:");
+    if (pass === "4998") {
+        adminCode = pass;
+        document.getElementById('admin-panel').classList.remove('hidden');
+    } else {
+        alert("Access Denied");
     }
+}
+
+function clickPlanet() {
+    clicks += (planets[currentPlanetIndex].power * multiplier);
+    updateUI();
+}
+
+// GLOBAL GIFT LISTENER
+socket.on('receiveGlobalGift', (data) => {
+    if (data.type === 'clicks') clicks += data.amount;
+    if (data.type === 'multi') multiplier += data.amount;
     updateUI();
 });
 
-function updateUI() {
-    document.getElementById('clicks').innerText = Math.floor(clicks).toLocaleString();
-    document.getElementById('multi').innerText = multiplier.toLocaleString();
-    document.getElementById('autos').innerText = autos.toLocaleString();
-}
-
-// ADMIN ACTIONS
 function adminAction(target, type) {
-    const amount = parseInt(document.getElementById('adm-amount').value) || 0;
-    
+    const amt = parseInt(document.getElementById('adm-amt').value) || 0;
     if (target === 'self') {
-        if (type === 'clicks') clicks += amount;
-        if (type === 'multi') multiplier += amount;
-        updateUI();
-    } else if (target === 'everyone') {
-        // Send to server to broadcast to all players
-        socket.emit('adminGlobalGift', {
-            code: adminCode,
-            type: type,
-            amount: amount
-        });
-        socket.emit('adminMessage', {
-            code: adminCode,
-            message: `ADMIN GIFTED ${amount.toLocaleString()} ${type.toUpperCase()} TO EVERYONE!`
-        });
+        if (type === 'clicks') clicks += amt;
+        if (type === 'multi') multiplier += amt;
+    } else {
+        socket.emit('adminGlobalGift', { code: adminCode, type: type, amount: amt });
     }
+    updateUI();
 }
 
-// ... rest of game logic (renderPlanets, buy, etc. from previous version) ...
+function updateUI() {
+    document.getElementById('click-display').innerText = "💰 " + Math.floor(clicks).toLocaleString();
+    document.getElementById('multi-display').innerText = "x" + multiplier.toLocaleString();
+    
+    // Update active planet
+    const p = planets[currentPlanetIndex];
+    document.getElementById('planet-name').innerText = p.name;
+    document.getElementById('main-planet').style.backgroundImage = `url(${p.img})`;
+}
+
+function closeAdmin() { document.getElementById('admin-panel').classList.add('hidden'); }
+
+// Initialize
+updateUI();

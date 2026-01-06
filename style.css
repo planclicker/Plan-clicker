@@ -1,23 +1,35 @@
-#game-wrapper { display: flex; height: 100vh; }
-.sidebar { width: 300px; background: #0a0a12; border-right: 2px solid #222; padding: 15px; overflow-y: auto; }
-.main-display { flex: 1; background: radial-gradient(circle, #1b2735 0%, #090a0f 100%); padding: 20px; }
+body { margin: 0; background: #050510; color: white; font-family: 'Arial', sans-serif; overflow: hidden; }
 
-.planet-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 50px;
+#game-container { display: flex; height: 100vh; }
+
+#shop-sidebar {
+    width: 280px; background: #11111d; border-right: 2px solid #222;
+    padding: 20px; display: flex; flex-direction: column;
 }
 
-.planet-btn {
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    border: 4px solid rgba(255,255,255,0.1);
-    background-size: cover;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    cursor: pointer;
-    transition: transform 0.1s;
+#main-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+
+#main-planet {
+    width: 300px; height: 300px; border-radius: 50%;
+    background-size: cover; background-position: center;
+    box-shadow: 0 0 50px rgba(255,255,255,0.1);
+    cursor: pointer; transition: transform 0.1s;
 }
 
-.planet-btn:active { transform: scale(0.95); }
+#main-planet:active { transform: scale(0.95); }
+
+#admin-trigger { position: absolute; top: 10px; right: 10px; background: transparent; border: 1px solid #333; color: #333; cursor: pointer; }
+
+#admin-panel {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+
+.admin-content { background: #111; padding: 40px; border: 2px solid red; text-align: center; }
+.hidden { display: none !important; }
+.global-btn { background: #b30000 !important; }
+
+button {
+    background: #1f1f3a; color: white; border: 1px solid #444;
+    padding: 10px; margin: 5px; cursor: pointer; border-radius: 5px;
+}
