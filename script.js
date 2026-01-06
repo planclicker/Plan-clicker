@@ -4,16 +4,15 @@ let multiplier = 1;
 let autos = 0;
 let adminCode = "";
 
-// High-scaling costs for that "Cool Math Games" feel
 const planets = [
     { name: "Mercury", cost: 0, power: 1 },
-    { name: "Venus", cost: 500, power: 15 },
-    { name: "Earth", cost: 10000, power: 120 },
-    { name: "Mars", cost: 250000, power: 800 },
-    { name: "Jupiter", cost: 5000000, power: 4500 },
-    { name: "Saturn", cost: 100000000, power: 25000 },
-    { name: "Uranus", cost: 2000000000, power: 150000 },
-    { name: "Neptune", cost: 50000000000, power: 1000000 }
+    { name: "Venus", cost: 1000, power: 25 },
+    { name: "Earth", cost: 50000, power: 500 },
+    { name: "Mars", cost: 1000000, power: 8000 },
+    { name: "Jupiter", cost: 100000000, power: 150000 },
+    { name: "Saturn", cost: 5000000000, power: 2000000 },
+    { name: "Uranus", cost: 100000000000, power: 50000000 },
+    { name: "Neptune", cost: 1000000000000, power: 1000000000 }
 ];
 
 let unlocked = ["Mercury"];
@@ -31,7 +30,7 @@ function renderPlanets() {
         const isUnlocked = unlocked.includes(p.name);
         const btn = document.createElement('button');
         btn.className = isUnlocked ? 'planet-btn' : 'planet-btn locked';
-        btn.innerHTML = `<b>${p.name}</b><br>${isUnlocked ? 'Power: ' + p.power : 'Unlock: ' + p.cost.toLocaleString()}`;
+        btn.innerHTML = `<b>${p.name}</b><br>${isUnlocked ? 'Base: ' + p.power : 'Cost: ' + p.cost.toLocaleString()}`;
         
         btn.onclick = () => {
             if (isUnlocked) {
@@ -47,29 +46,40 @@ function renderPlanets() {
     });
 }
 
-function buy(type, cost) {
+function buy(item, cost) {
     if (clicks >= cost) {
         clicks -= cost;
-        if (type.includes('multi')) multiplier += (type === 'multi' ? 1 : type === 'multi_mega' ? 50 : 1000);
-        if (type.includes('auto')) autos += (type === 'auto' ? 1 : 500);
+        if (item === 'm1') multiplier += 1;
+        if (item === 'm2') multiplier += 10;
+        if (item === 'm3') multiplier += 100;
+        if (item === 'm4') multiplier += 1000;
+        if (item === 'm5') multiplier += 50000;
+        if (item === 'm6') multiplier += 1000000;
+        
+        if (item === 'a1') autos += 1;
+        if (item === 'a2') autos += 500;
+        if (item === 'a3') autos += 100000;
         updateUI();
     }
 }
 
-// ADMIN FUNCTIONS
+// ADMIN POWER LOGIC
 function loginAdmin() {
-    adminCode = prompt("Enter Code:");
+    adminCode = prompt("Enter 4-Digit Security Key:");
     if (adminCode === "4998") {
         document.getElementById('admin-modal').classList.remove('hidden');
     }
 }
 
-function adminAction(action) {
-    if (action === 'addClicks') {
-        const val = parseInt(document.getElementById('gift-amount').value);
+function adminAction(type) {
+    if (type === 'giveClicks') {
+        let val = parseInt(document.getElementById('adm-clicks').value) || 0;
         clicks += val;
-    } else if (action === 'maxMulti') {
-        multiplier *= 100;
+        socket.emit('adminMessage', { code: adminCode, message: `Admin injected ${val.toLocaleString()} clicks into the system!` });
+    } else if (type === 'giveMulti') {
+        let val = parseInt(document.getElementById('adm-multi').value) || 0;
+        multiplier += val;
+        socket.emit('adminMessage', { code: adminCode, message: `Global Multiplier boosted by ${val.toLocaleString()}!` });
     }
     updateUI();
 }
@@ -81,7 +91,7 @@ function sendGlobalMsg() {
 
 socket.on('newMessage', (msg) => {
     const chat = document.getElementById('chat-display');
-    chat.innerHTML += `<div style="color:#00ffcc"><b>[${msg.user}]:</b> ${msg.text}</div>`;
+    chat.innerHTML += `<div><span style="color:red;">[SYSTEM]:</span> ${msg.text}</div>`;
     chat.scrollTop = chat.scrollHeight;
 });
 
@@ -92,5 +102,4 @@ setInterval(() => {
     }
 }, 1000);
 
-function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
 renderPlanets();

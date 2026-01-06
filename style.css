@@ -1,22 +1,32 @@
-body { background: #0b0d17; color: white; font-family: sans-serif; text-align: center; margin: 0; }
-#admin-bar { background: #16213e; padding: 10px; display: flex; justify-content: space-between; border-bottom: 2px solid #4ecca3; }
-.stats { display: flex; justify-content: space-around; background: #1a1a2e; padding: 15px; font-size: 1.2rem; font-weight: bold; }
-.game-container { display: grid; grid-template-columns: 2fr 1fr; padding: 20px; gap: 20px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-
-.planet-btn { 
-    aspect-ratio: 1/1; 
-    border-radius: 50%; 
-    border: 2px solid #4ecca3; 
-    background: radial-gradient(circle, #1f4068, #16213e);
-    color: white; cursor: pointer; transition: 0.2s;
+/* Add this to your existing style.css */
+.shop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-.planet-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px #4ecca3; }
-.planet-btn.locked { opacity: 0.4; filter: grayscale(1); }
 
-.shop-btn { width: 100%; margin: 5px 0; padding: 10px; background: #0f3460; color: white; border: 1px solid #4ecca3; border-radius: 5px; cursor: pointer; }
-.shop-btn:hover { background: #4ecca3; color: #111; }
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+}
 
-#admin-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #111; padding: 40px; border: 5px solid red; z-index: 1000; box-shadow: 0 0 100px rgba(255,0,0,0.5); }
-.hidden { display: none; }
-#chat-display { height: 150px; background: #000; margin-top: 10px; overflow-y: auto; padding: 10px; text-align: left; border: 1px solid #444; }
+.admin-grid input {
+    width: 90%;
+    padding: 8px;
+    background: #222;
+    border: 1px solid red;
+    color: white;
+}
+
+.admin-grid button {
+    margin-top: 5px;
+    width: 100%;
+    background: red;
+    color: white;
+    font-weight: bold;
+}
+
+hr { border: 0; border-top: 1px solid #444; margin: 20px 0; }
