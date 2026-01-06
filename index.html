@@ -7,11 +7,12 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+    <audio id="click-sound" src="https://www.soundjay.com/buttons/button-16.mp3"></audio>
+
     <div id="game-container">
         <div id="shop-sidebar">
-            <h2>UPGRADES</h2>
-            <div id="multiplier-list">
-                </div>
+            <h2 class="shop-title">UPGRADES</h2>
+            <div id="multiplier-list"></div>
             <div id="chat-box">
                 <div id="messages"></div>
             </div>
@@ -20,16 +21,20 @@
         <div id="main-area">
             <div id="stats">
                 <h1 id="click-display">💰 0</h1>
-                <p>Multiplier: <span id="multi-display">x1</span></p>
+                <p>Global Power: <span id="multi-display">x1</span></p>
             </div>
             
             <div id="active-planet-zone">
                 <div id="main-planet" onclick="clickPlanet()"></div>
+                <button id="unlock-btn" onclick="tryUnlock()"></button>
                 <h2 id="planet-name">MERCURY</h2>
             </div>
 
-            <div id="planet-bar">
-                </div>
+            <div id="planet-nav">
+                <button class="nav-arrow" onclick="changePlanet(-1)">◀</button>
+                <div id="planet-indicator">SWITCH PLANET</div>
+                <button class="nav-arrow" onclick="changePlanet(1)">▶</button>
+            </div>
         </div>
 
         <button id="admin-trigger" onclick="openAdmin()">ADMIN</button>
@@ -37,21 +42,21 @@
 
     <div id="admin-panel" class="hidden">
         <div class="admin-content">
-            <h1>SYSTEM OVERRIDE</h1>
-            <input type="number" id="adm-amt" placeholder="Amount">
+            <h1 style="color:red; letter-spacing: 5px;">SYSTEM OVERRIDE</h1>
+            <input type="number" id="adm-amt" placeholder="Enter Amount">
             <div class="admin-row">
-                <button onclick="adminAction('self', 'clicks')">Give Me Clicks</button>
-                <button onclick="adminAction('everyone', 'clicks')" class="global-btn">Give All Clicks</button>
+                <button onclick="adminAction('self', 'clicks')">GIVE ME CLICKS</button>
+                <button onclick="adminAction('everyone', 'clicks')" class="global-btn">GIVE ALL CLICKS</button>
             </div>
             <div class="admin-row">
-                <button onclick="adminAction('self', 'multi')">Give Me Multi</button>
-                <button onclick="adminAction('everyone', 'multi')" class="global-btn">Give All Multi</button>
+                <button onclick="adminAction('self', 'multi')">GIVE ME MULTI</button>
+                <button onclick="adminAction('everyone', 'multi')" class="global-btn">GIVE ALL MULTI</button>
             </div>
             <hr>
-            <input type="text" id="adm-msg" placeholder="Message to everyone...">
-            <button onclick="broadcast()">Send Global Message</button>
+            <input type="text" id="adm-msg" placeholder="Broadcast message...">
+            <button onclick="broadcast()">SEND ANNOUNCEMENT</button>
             <br><br>
-            <button onclick="closeAdmin()">Close</button>
+            <button onclick="closeAdmin()" style="background:#444">CLOSE</button>
         </div>
     </div>
 

@@ -1,35 +1,34 @@
-body { margin: 0; background: #050510; color: white; font-family: 'Arial', sans-serif; overflow: hidden; }
-
-#game-container { display: flex; height: 100vh; }
-
 #shop-sidebar {
-    width: 280px; background: #11111d; border-right: 2px solid #222;
+    width: 280px; background: #080810; border-right: 2px solid #00ffcc;
     padding: 20px; display: flex; flex-direction: column;
 }
 
-#main-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+.shop-title { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; margin-bottom: 20px; }
 
-#main-planet {
-    width: 300px; height: 300px; border-radius: 50%;
-    background-size: cover; background-position: center;
-    box-shadow: 0 0 50px rgba(255,255,255,0.1);
-    cursor: pointer; transition: transform 0.1s;
+.shop-item {
+    width: 100%; background: #161625; color: white; border: 1px solid #333;
+    padding: 15px; margin-bottom: 10px; border-radius: 4px; cursor: pointer;
+    text-align: left; transition: 0.2s;
 }
 
-#main-planet:active { transform: scale(0.95); }
+.shop-item:hover { border-color: #00ffcc; background: #1c1c30; }
 
-#admin-trigger { position: absolute; top: 10px; right: 10px; background: transparent; border: 1px solid #333; color: #333; cursor: pointer; }
+#planet-nav { display: flex; align-items: center; gap: 30px; margin-top: 40px; }
 
-#admin-panel {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    display: flex; align-items: center; justify-content: center; z-index: 100;
+.nav-arrow {
+    background: #00ffcc; border: none; padding: 10px 20px; font-size: 1.5rem;
+    cursor: pointer; border-radius: 4px; font-weight: bold;
 }
 
-.admin-content { background: #111; padding: 40px; border: 2px solid red; text-align: center; }
-.hidden { display: none !important; }
-.global-btn { background: #b30000 !important; }
-
-button {
-    background: #1f1f3a; color: white; border: 1px solid #444;
-    padding: 10px; margin: 5px; cursor: pointer; border-radius: 5px;
+#unlock-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #ff0055; color: white; border: none; padding: 25px;
+    font-size: 1.5rem; font-weight: bold; cursor: pointer; border-radius: 8px;
+    box-shadow: 0 0 30px rgba(255,0,85,0.4);
 }
+
+#admin-trigger { 
+    position: fixed; top: 10px; right: 10px; opacity: 0.2; 
+    background: none; border: 1px solid white; color: white; cursor: pointer;
+}
+#admin-trigger:hover { opacity: 1; color: red; border-color: red; }
