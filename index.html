@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PlanClicker.com</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="admin-bar">
+        <span>PlanClicker.com</span>
+        <button onclick="loginAdmin()">Admin Access</button>
+    </div>
+
+    <div class="stats">
+        <div>💰 <span id="clicks">0</span> Clicks</div>
+        <div>🚀 x<span id="multi">1</span> Power</div>
+        <div>🤖 <span id="autos">0</span> Bots</div>
+    </div>
+
+    <div class="game-container">
+        <div id="planets" class="grid"></div>
+        
+        <div class="shop">
+            <h3>Cosmic Upgrades</h3>
+            <div id="upgrades-list">
+                <button class="shop-btn" onclick="buy('multi', 50)">Standard Multi (50)</button>
+                <button class="shop-btn" onclick="buy('multi_mega', 5000)">Mega Multi (5k)</button>
+                <button class="shop-btn" onclick="buy('multi_galactic', 1000000)">Galactic Multi (1M)</button>
+                <hr>
+                <button class="shop-btn" onclick="buy('auto', 100)">Auto Bot (100)</button>
+                <button class="shop-btn" onclick="buy('auto_fleet', 25000)">Droid Fleet (25k)</button>
+            </div>
+            <div id="chat-display"></div>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="hidden">
+        <h2>ADMIN CONSOLE</h2>
+        <input type="number" id="gift-amount" placeholder="Amount">
+        <button onclick="adminAction('addClicks')">Give Clicks</button>
+        <button onclick="adminAction('maxMulti')">Max Multiplier</button>
+        <hr>
+        <input type="text" id="admin-chat-input" placeholder="Global Message">
+        <button onclick="sendGlobalMsg()">Broadcast to All</button>
+        <br><br>
+        <button onclick="closeAdmin()" style="background:red; color:white;">Close</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
